@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
+import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
 import com.example.exampleapp.R
@@ -13,29 +14,35 @@ import com.example.exampleapp.databinding.ActivityMainBinding
 import com.example.exampleapp.ui.adapters.PostsAdapter
 import com.example.exampleapp.ui.dto.PostListItem
 import com.example.exampleapp.ui.fullpost.FullPostActivity
+import com.example.exampleapp.ui.postslist.ui.PostsViewModel
 import io.ktor.client.*
 import io.ktor.client.features.*
 import io.ktor.client.features.json.*
 import io.ktor.client.request.*
 import io.ktor.http.*
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class PostsListActivity : AppCompatActivity(), PostsListView {
+class PostsListActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private lateinit var presenter: PostsListPresenter
     private lateinit var adapter: PostsAdapter
+
+    private val postsViewModel by viewModel<PostsViewModel>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        presenter = PostsListPresenter(this)
+
         adapter = PostsAdapter(mutableListOf()){ postId ->
             onPostClick(postId)
         }
         binding.rvPosts.adapter = adapter
         setDecorator()
+        initObservers()
+
         lifecycleScope.launchWhenCreated {
-            presenter.init()
+            postsViewModel.init()
         }
 
         /*val client = HttpClient {
@@ -70,6 +77,30 @@ class PostsListActivity : AppCompatActivity(), PostsListView {
 
     }
 
+    private fun initObservers() {
+        postsViewModel.loading.observe(this, ::showLoadingEvent)
+        postsViewModel.postsLoaded.observe(this, ::setData)
+    }
+
+    private fun showLoadingEvent(loading: Boolean) {
+       if (loading) showLoading() else hideLoading()
+    }
+
+    private fun showLoading() {
+        binding.rvPosts.isVisible = false
+        binding.progressBar.isVisible = true
+    }
+
+    private fun hideLoading() {
+        binding.rvPosts.isVisible = true
+        binding.progressBar.isVisible = false
+    }
+
+    private fun setData(posts: List<PostListItem>) {
+        adapter.posts.clear()
+        adapter.posts.addAll(posts)
+    }
+
     private fun setDecorator() {
         binding.rvPosts.addItemDecoration(
             object : RecyclerView.ItemDecoration() {
@@ -99,18 +130,5 @@ class PostsListActivity : AppCompatActivity(), PostsListView {
         const val BASE_URL = "jsonplaceholder.typicode.com"
     }
 
-    override fun showLoading() {
-        binding.rvPosts.isVisible = false
-        binding.progressBar.isVisible = true
-    }
 
-    override fun hideLoading() {
-        binding.rvPosts.isVisible = true
-        binding.progressBar.isVisible = false
-    }
-
-    override fun setData(posts: List<PostListItem>) {
-        adapter.posts.clear()
-        adapter.posts.addAll(posts)
-    }
 }
