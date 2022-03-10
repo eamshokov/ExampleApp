@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest package="com.example.exampleapp"
     xmlns:android="http://schemas.android.com/apk/res/android">
-
+    <uses-permission android:name="android.permission.INTERNET" />
     <application
         android:name=".ExApp"
         android:allowBackup="true"
@@ -11,11 +11,20 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ExampleApp">
 
+<!--        <activity-->
+<!--            android:name=".ui.fullpost.FullPostActivity"-->
+<!--            android:exported="false" />-->
+<!--        <activity-->
+<!--            android:name=".ui.postslist.PostsListActivity"-->
+<!--            android:exported="true">-->
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
+<!--        </activity>-->
         <activity
-            android:name=".ui.fullpost.FullPostActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.postslist.PostsListActivity"
+            android:name=".ui.fragment.ViewActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,7 +33,4 @@
             </intent-filter>
         </activity>
     </application>
-
-    <uses-permission android:name="android.permission.INTERNET" />
-
 </manifest>

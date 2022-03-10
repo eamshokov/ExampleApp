@@ -9,12 +9,13 @@ import com.example.exampleapp.ui.dto.PostListItem
 
 class PostsAdapter(
     val posts: MutableList<PostListItem>,
-    private val onItemClicked: (postId:Int) -> Unit = {}
+    private val onItemClicked: (postId: Int) -> Unit = {}
 ) : RecyclerView.Adapter<PostsAdapter.ViewHolder>() {
 
     class ViewHolder(
         val itemBinding: ItemPostBinding
     ) : RecyclerView.ViewHolder(itemBinding.root)
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
         ViewHolder(
@@ -30,6 +31,5 @@ class PostsAdapter(
             onItemClicked(posts[position].id)
         }
     }
-
     override fun getItemCount(): Int = posts.size
 }

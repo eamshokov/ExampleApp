@@ -1,5 +1,8 @@
 package com.example.exampleapp.data
 
 class ConstantsProvider {
-    fun getBaseUrl() = "jsonplaceholder.typicode.com"
+    companion object{
+        const val POST_ID_ARG = "postId"
+        fun baseUrl() = "jsonplaceholder.typicode.com"
+    }
 }

@@ -1,4 +1,4 @@
-package com.example.exampleapp.ui.postslist.ui
+package com.example.exampleapp.ui.viewModel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -11,13 +11,11 @@ import kotlinx.coroutines.withContext
 
 class PostsViewModel(
     private val getPostsUseCase: GetPostsUseCase,
-    private val postMapper: PostMapper
-) : ViewModel() {
+    private val postMapper: PostMapper) : ViewModel() {
 
     private val _postsLoaded = MutableLiveData<List<PostListItem>>()
-    val postsLoaded: LiveData<List<PostListItem>> get() = _postsLoaded
-
     private val _loading = MutableLiveData<Boolean>()
+    val postsLoaded: LiveData<List<PostListItem>> get() = _postsLoaded
     val loading: LiveData<Boolean> get() = _loading
 
     suspend fun init(){

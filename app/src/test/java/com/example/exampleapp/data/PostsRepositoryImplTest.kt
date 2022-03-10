@@ -2,12 +2,12 @@ package com.example.exampleapp.data
 
 import com.example.exampleapp.data.dto.PostResponse
 import com.example.exampleapp.data.mappers.PostResponseMapper
-import com.example.exampleapp.data.net.PostApi
+import com.example.exampleapp.data.net.post.PostApi
+import com.example.exampleapp.data.repository.PostsRepositoryImpl
 import com.example.exampleapp.domain.dto.Post
 import com.google.common.truth.Truth
 import io.mockk.every
 import io.mockk.mockk
-import io.mockk.slot
 import kotlinx.coroutines.runBlocking
 import org.junit.Test
 

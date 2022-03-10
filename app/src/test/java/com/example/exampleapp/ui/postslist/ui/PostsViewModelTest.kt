@@ -7,6 +7,7 @@ import com.example.exampleapp.domain.dto.Post
 import com.example.exampleapp.domain.usecases.GetPostsUseCase
 import com.example.exampleapp.ui.dto.PostListItem
 import com.example.exampleapp.ui.mapper.PostMapper
+import com.example.exampleapp.ui.viewModel.PostsViewModel
 import io.mockk.Runs
 import io.mockk.every
 import io.mockk.just

@@ -9,14 +9,13 @@ import io.ktor.client.request.host
 import io.ktor.http.URLProtocol
 
 class HttpClientProvider(
-    private val constants: ConstantsProvider
-) {
+    private val constants: ConstantsProvider) {
     fun getHttpClient() = HttpClient {
         install(JsonFeature) {
             serializer = GsonSerializer()
         }
         defaultRequest {
-            host = constants.getBaseUrl()
+            host = ConstantsProvider.baseUrl()
             url {
                 protocol = URLProtocol.HTTPS
             }

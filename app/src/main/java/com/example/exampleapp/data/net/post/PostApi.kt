@@ -1,4 +1,4 @@
-package com.example.exampleapp.data.net
+package com.example.exampleapp.data.net.post
 
 import com.example.exampleapp.data.dto.PostResponse
 
