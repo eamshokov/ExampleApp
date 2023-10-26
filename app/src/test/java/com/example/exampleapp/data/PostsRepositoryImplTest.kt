@@ -2,6 +2,7 @@ package com.example.exampleapp.data
 
 import com.example.exampleapp.data.dto.PostResponse
 import com.example.exampleapp.data.mappers.PostResponseMapper
+import com.example.exampleapp.data.mappers.PostResponseMapperImpl
 import com.example.exampleapp.data.net.PostApi
 import com.example.exampleapp.domain.dto.Post
 import com.google.common.truth.Truth
@@ -14,7 +15,7 @@ import org.junit.Test
 internal class PostsRepositoryImplTest {
 
     private val api = mockk<PostApi>()
-    private val mapper = mockk<PostResponseMapper>()
+    private val mapper = PostResponseMapperImpl()
 
     private val repository = PostsRepositoryImpl(api, mapper)
     private val postsResponse = listOf(
@@ -30,7 +31,6 @@ internal class PostsRepositoryImplTest {
     @Test
     fun getPosts() {
         every { runBlocking {  api.getPosts() } } returns postsResponse
-        every { mapper.postResponseToPost(any()) } returns posts[0]
 
         val ans = runBlocking {  repository.getPost() }
 
